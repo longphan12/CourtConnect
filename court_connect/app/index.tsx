@@ -2,6 +2,33 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-nativ
 import Map from "./components/Map";
 import { Feather } from '@expo/vector-icons';
 import { useState } from "react";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+function MapScreen() {
+  return (
+    <View style={{flex: 1}}>
+      <View style={styles.searchContainer}>
+        <TextInput 
+          style={styles.searchInput} 
+          placeholder="Search for a facility" 
+        />
+        <TouchableOpacity >
+          <Feather name="search" size={18} color="#777" />
+        </TouchableOpacity>
+      </View>
+      <Map />
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+export default function HomeScreen() {
+  return (
+    <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Screen name="Map" component={MapScreen} />
+    </Tab.Navigator>
+  );
+}
 
 const styles = StyleSheet.create({
   searchContainer: {
@@ -28,19 +55,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function HomeScreen() {
-  return (
-    <View style={{flex: 1}}>
-      <View style={styles.searchContainer}>
-        <TextInput 
-          style={styles.searchInput} 
-          placeholder="Search for a facility" 
-        />
-        <TouchableOpacity >
-          <Feather name="search" size={18} color="#777" />
-        </TouchableOpacity>
-      </View>
-      <Map />
-    </View>
-  );
-}
+
