@@ -1,45 +1,43 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Facility } from '../models/Facility';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 type Props = {
-  facility: Facility;
-  onClose: () => void;
+    facility: Facility;
+    onClose: () => void;
 }
 
 export default function FacilityInfoWindow({ facility, onClose }: Props) {
-  return (
-    <View style={styles.container}>
-        <View style={styles.headerContainer}>
-            <Text style={styles.header}>{facility.name}</Text>
-            <TouchableOpacity activeOpacity={0.9} style={styles.button} onPress={() => console.log('Book now pressed')}>
-                <Text>Book Now</Text>
-            </TouchableOpacity>
-        </View>
-        <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>{facility.address}</Text>
-        <Text style={styles.infoText}>{facility.phone}</Text>
-        <Text style={styles.infoText}>{facility.openHours}</Text>
-        </View>
+    const snapPoints = useMemo(() => ['25%', '50%', '70%'], []);
+    return (
+            <BottomSheet handleIndicatorStyle={{width: 40, height: 3}} snapPoints={snapPoints} index={0} enablePanDownToClose={true} onClose={onClose}>
+                <BottomSheetView style={styles.container}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.header}>{facility.name}</Text>
+                            <TouchableOpacity activeOpacity={0.9} style={styles.button} onPress={() => console.log('Book now pressed')}>
+                                <Text>Book Now</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.infoText}>{facility.address}</Text>
+                            <Text style={styles.infoText}>{facility.phone}</Text>
+                            <Text style={styles.infoText}>{facility.openHours}</Text>
+                        </View>
 
+                        <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+                            <Text style={styles.cancelText}>✕</Text>
+                        </TouchableOpacity>
+                </BottomSheetView>
 
-      <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-        <Text style={styles.cancelText}>✕</Text>
-      </TouchableOpacity>
-    </View>
-  );
+            </BottomSheet>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#6DC7FF',
-        position: 'absolute',
-        bottom: 0,
-        height: '40%',
-        width: '100%',
-        borderRadius: 12,
-        paddingHorizontal: 16,
-        paddingTop: 24,
+        flex: 1,
     },
     headerContainer: {
         flexDirection: 'row',
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 26,
         fontWeight: 'bold',
-        color: '#fff',
+        color: '#F3E5C3',
     },
     button: {
         padding: 8,
