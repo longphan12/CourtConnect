@@ -8,7 +8,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function MapScreen() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
         <View style={styles.searchContainer}>
           <TextInput
@@ -21,16 +20,19 @@ function MapScreen() {
         </View>
         <Map />
       </View>
-    </GestureHandlerRootView>
   );
 }
 
 const Tab = createBottomTabNavigator();
+
 export default function HomeScreen() {
   return (
+  <GestureHandlerRootView style={{ flex: 1 }}>
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Map" component={MapScreen} />
     </Tab.Navigator>
+  </GestureHandlerRootView>
+
   );
 }
 

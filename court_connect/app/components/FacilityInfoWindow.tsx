@@ -11,12 +11,18 @@ type Props = {
 export default function FacilityInfoWindow({ facility, onClose }: Props) {
     const snapPoints = useMemo(() => ['25%', '50%', '70%'], []);
     return (
-            <BottomSheet handleIndicatorStyle={{width: 40, height: 3}} snapPoints={snapPoints} index={0} enablePanDownToClose={true} onClose={onClose}>
-                <BottomSheetView style={styles.container}>
+            <BottomSheet handleIndicatorStyle={{width: 40, height: 3}} 
+            snapPoints={snapPoints} index={0} 
+            enablePanDownToClose={true} 
+            onClose={onClose}
+            backgroundStyle={styles.container}
+            handleStyle={styles.handle}
+            >
+                <BottomSheetView style={styles.innerContainer}>
                         <View style={styles.headerContainer}>
                             <Text style={styles.header}>{facility.name}</Text>
                             <TouchableOpacity activeOpacity={0.9} style={styles.button} onPress={() => console.log('Book now pressed')}>
-                                <Text>Book Now</Text>
+                                <Text style={{textAlign: 'center'}}>Book Now</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.infoContainer}>
@@ -24,10 +30,6 @@ export default function FacilityInfoWindow({ facility, onClose }: Props) {
                             <Text style={styles.infoText}>{facility.phone}</Text>
                             <Text style={styles.infoText}>{facility.openHours}</Text>
                         </View>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-                            <Text style={styles.cancelText}>✕</Text>
-                        </TouchableOpacity>
                 </BottomSheetView>
 
             </BottomSheet>
@@ -36,24 +38,36 @@ export default function FacilityInfoWindow({ facility, onClose }: Props) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#6DC7FF',
+        backgroundColor: '#92b8ff',
         flex: 1,
+        borderTopRightRadius: 25,
+        borderTopLeftRadius: 25
+    },
+    handle: {
+        backgroundColor: '#fafcf6',
+        borderTopRightRadius: 25,
+        borderTopLeftRadius: 25
+    },
+    innerContainer: {
+        padding: 18,
     },
     headerContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 16
+        flexDirection: 'column',
+        gap: 8,
+        marginBottom: 18
     },
     header: {
-        fontSize: 26,
+        fontSize: 32,
         fontWeight: 'bold',
-        color: '#F3E5C3',
+        color: '#fafcf6',
+        textAlign: 'center'
     },
     button: {
         padding: 8,
         backgroundColor: '#F4ED8B',
         borderRadius: 8,
+        width: '40%',
+        alignSelf: 'center'
     },
     infoContainer: {
         flexDirection: 'column',
@@ -62,10 +76,7 @@ const styles = StyleSheet.create({
     infoText: {
         fontSize: 15
     },
-    cancelButton: {
-        top: 80,
-        alignSelf: 'center',
-    },
+
     cancelText: {
         fontSize: 24,
         color: 'red',
